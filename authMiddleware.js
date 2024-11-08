@@ -1,7 +1,9 @@
 const jwt = require("jsonwebtoken");
+
 const APP_SECRET = "myappsecret";
 const USERNAME = "admin";
 const PASSWORD = "secret";
+
 const mappings = {
     get: ["/api/orders", "/orders"],
     post: ["/api/products", "/products", "/api/categories", "/categories"]
@@ -11,6 +13,7 @@ function requiresAuth(method, url) {
     return (mappings[method.toLowerCase()] || [])
         .find(p => url.startsWith(p)) !== undefined;
 }
+
 module.exports = function (req, res, next) {
     if (req.url.endsWith("/login") && req.method == "POST") {
         if (req.body && req.body.name == USERNAME && req.body.password == PASSWORD) {
